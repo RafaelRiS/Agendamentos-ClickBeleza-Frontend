@@ -29,9 +29,6 @@ export const SERVICES: Service[] = [
 
 export const BARBERS: Barber[] = [
   { id: "camila", name: "Camila", image: stylist1, available: true, specialty: "Cortes" },
-  { id: "aline", name: "Aline", image: stylist2, available: true, specialty: "Coloração" },
-  { id: "renata", name: "Renata", image: stylist3, available: false, specialty: "Tratamentos" },
-  { id: "julia", name: "Júlia", image: stylist4, available: true, specialty: "Penteados" },
 ];
 
 export const TIME_SLOTS = [
@@ -40,4 +37,4 @@ export const TIME_SLOTS = [
   "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
 ];
 
-export const UNAVAILABLE_SLOTS = ["09:00", "10:30", "12:00", "13:30", "15:00", "17:00"];
+export const UNAVAILABLE_SLOTS = ["09:00"];

@@ -58,14 +58,6 @@ const Index = () => {
     <div className="min-h-screen bg-background max-w-lg mx-auto relative">
       <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
 
-      {/* Barra de status */}
-      <div className="border-b border-border px-6 py-3 flex items-center gap-3">
-        <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-        <p className="font-mono-data text-[11px] text-muted-foreground">
-          Atendendo agora: Cliente #47. Próximo horário livre em <span className="text-foreground">14 min</span>.
-        </p>
-      </div>
-
       {/* Botão voltar */}
       {step > 0 && (
         <button

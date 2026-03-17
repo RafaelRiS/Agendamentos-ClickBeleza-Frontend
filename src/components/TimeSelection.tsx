@@ -60,10 +60,23 @@ const TimeSelection = ({
         <p className="text-xs text-muted-foreground tracking-widest uppercase mb-4">
           Escolha o horário.
         </p>
-        <div className="grid grid-cols-3 gap-2">
-          {slots.map((slot) => {
-            const unavailable = UNAVAILABLE_SLOTS.includes(slot);
-            const isSelected = selectedSlot === slot;
+          <div className="grid grid-cols-3 gap-2">
+              {slots.map((slot) => {
+
+                  const now = new Date();
+
+                  const [hour, minute] = slot.split(":").map(Number);
+
+                  const slotTime = new Date(selectedDate);
+                  slotTime.setHours(hour, minute, 0, 0);
+
+                  const isPast =
+                      format(selectedDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd") &&
+                      slotTime < now;
+
+                  const unavailable = UNAVAILABLE_SLOTS.includes(slot) || isPast;
+
+                  const isSelected = selectedSlot === slot;
             return (
               <motion.button
                 key={slot}
