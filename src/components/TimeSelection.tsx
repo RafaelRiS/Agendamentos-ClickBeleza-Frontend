@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { addDays, format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { UNAVAILABLE_SLOTS } from "@/data/booking-data";
 
 interface TimeSelectionProps {
@@ -23,10 +23,10 @@ const TimeSelection = ({
 
   return (
     <div className="py-8">
-      {/* Day Scroller */}
+      {/* Seletor de dia */}
       <div className="px-6 mb-8">
         <p className="text-xs text-muted-foreground tracking-widest uppercase mb-4">
-          Select day.
+          Escolha o dia.
         </p>
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6">
           {days.map((day) => {
@@ -44,7 +44,7 @@ const TimeSelection = ({
                 }`}
               >
                 <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
-                  {format(day, "EEE")}
+                  {format(day, "EEE", { locale: ptBR })}
                 </span>
                 <span className="font-mono-data text-lg font-medium text-foreground mt-0.5">
                   {format(day, "dd")}
@@ -55,10 +55,10 @@ const TimeSelection = ({
         </div>
       </div>
 
-      {/* Time Grid */}
+      {/* Grade de horários */}
       <div className="px-6">
         <p className="text-xs text-muted-foreground tracking-widest uppercase mb-4">
-          Select time.
+          Escolha o horário.
         </p>
         <div className="grid grid-cols-3 gap-2">
           {slots.map((slot) => {

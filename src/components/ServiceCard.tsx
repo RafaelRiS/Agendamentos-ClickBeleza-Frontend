@@ -18,15 +18,15 @@ const ServiceCard = ({ service, selected, onSelect }: ServiceCardProps) => {
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-base font-medium tracking-tighter text-foreground">
+          <p className="text-base font-medium tracking-tight text-foreground">
             {service.name}
           </p>
           <p className="font-mono-data text-xs text-muted-foreground mt-1">
-            {service.duration}m
+            {service.duration}min
           </p>
         </div>
         <span className="font-mono-data text-sm text-primary">
-          ${service.price}
+          R${service.price}
         </span>
       </div>
     </motion.button>

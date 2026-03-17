@@ -11,7 +11,7 @@ const BarberSelector = ({ barbers, selectedId, onSelect }: BarberSelectorProps) 
   return (
     <div className="px-6 py-8">
       <p className="text-xs text-muted-foreground tracking-widest uppercase mb-6">
-        Select barber.
+        Escolha sua profissional.
       </p>
       <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 scrollbar-hide">
         {barbers.map((barber) => (
@@ -24,8 +24,8 @@ const BarberSelector = ({ barbers, selectedId, onSelect }: BarberSelectorProps) 
             }`}
           >
             <div
-              className={`relative w-20 h-20 overflow-hidden ${
-                selectedId === barber.id ? "ring-1 ring-accent" : "ring-1 ring-border"
+              className={`relative w-20 h-20 overflow-hidden rounded-full ${
+                selectedId === barber.id ? "ring-2 ring-accent" : "ring-1 ring-border"
               }`}
             >
               <img
@@ -33,9 +33,8 @@ const BarberSelector = ({ barbers, selectedId, onSelect }: BarberSelectorProps) 
                 alt={barber.name}
                 className="w-full h-full object-cover"
               />
-              {/* Availability dot */}
               <div
-                className={`absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full ${
+                className={`absolute bottom-1 right-1 w-2 h-2 rounded-full ${
                   barber.available ? "bg-accent" : "bg-muted-foreground"
                 }`}
               />

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import type { Service, Barber } from "@/data/booking-data";
 
 interface ConfirmationSliderProps {
@@ -39,57 +40,54 @@ const ConfirmationSlider = ({
 
   return (
     <div className="px-6 py-8">
-      {/* Summary */}
+      {/* Resumo */}
       <div className="border border-border p-6 mb-8 space-y-4">
         <p className="text-xs text-muted-foreground tracking-widest uppercase">
-          Booking summary.
+          Resumo do agendamento.
         </p>
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm text-foreground">{service.name}</span>
-            <span className="font-mono-data text-sm text-primary">${service.price}</span>
+            <span className="font-mono-data text-sm text-primary">R${service.price}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Barber</span>
+            <span className="text-sm text-muted-foreground">Profissional</span>
             <span className="text-sm text-foreground">{barber.name}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Date</span>
+            <span className="text-sm text-muted-foreground">Data</span>
             <span className="font-mono-data text-sm text-foreground">
-              {format(date, "EEE, MMM dd")}
+              {format(date, "EEE, dd MMM", { locale: ptBR })}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Time</span>
+            <span className="text-sm text-muted-foreground">Horário</span>
             <span className="font-mono-data text-sm text-foreground">{time}</span>
           </div>
           <div className="flex justify-between items-center border-t border-border pt-3">
-            <span className="text-sm text-muted-foreground">Duration</span>
-            <span className="font-mono-data text-sm text-foreground">{service.duration}m</span>
+            <span className="text-sm text-muted-foreground">Duração</span>
+            <span className="font-mono-data text-sm text-foreground">{service.duration}min</span>
           </div>
         </div>
       </div>
 
-      {/* Slide to confirm */}
+      {/* Deslizar para confirmar */}
       <div
         ref={constraintsRef}
         className="relative h-16 border border-border overflow-hidden mx-auto"
         style={{ width: trackWidth }}
       >
-        {/* Background fill */}
         <motion.div
           className="absolute inset-0 bg-accent"
           style={{ opacity: bgOpacity }}
         />
 
-        {/* Label */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <span className={`font-mono-data text-xs tracking-widest uppercase ${confirmed ? "text-accent-foreground" : "text-muted-foreground"}`}>
-            {confirmed ? "Confirmed." : "Slide to confirm"}
+            {confirmed ? "Confirmado!" : "Deslize para confirmar"}
           </span>
         </div>
 
-        {/* Thumb */}
         {!confirmed && (
           <motion.div
             drag="x"

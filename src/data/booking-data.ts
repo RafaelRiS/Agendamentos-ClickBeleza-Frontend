@@ -1,7 +1,7 @@
-import barber1 from "@/assets/barber-1.jpg";
-import barber2 from "@/assets/barber-2.jpg";
-import barber3 from "@/assets/barber-3.jpg";
-import barber4 from "@/assets/barber-4.jpg";
+import stylist1 from "@/assets/stylist-1.jpg";
+import stylist2 from "@/assets/stylist-2.jpg";
+import stylist3 from "@/assets/stylist-3.jpg";
+import stylist4 from "@/assets/stylist-4.jpg";
 
 export interface Service {
   id: string;
@@ -19,19 +19,19 @@ export interface Barber {
 }
 
 export const SERVICES: Service[] = [
-  { id: "skin-fade", name: "Skin Fade", price: 55, duration: 45 },
-  { id: "classic-cut", name: "Classic Cut", price: 40, duration: 30 },
-  { id: "buzz-cut", name: "Buzz Cut", price: 25, duration: 15 },
-  { id: "beard-trim", name: "Beard Trim", price: 30, duration: 20 },
-  { id: "hot-towel-shave", name: "Hot Towel Shave", price: 45, duration: 35 },
-  { id: "lineup", name: "Line-Up", price: 20, duration: 15 },
+  { id: "corte-feminino", name: "Corte Feminino", price: 120, duration: 60 },
+  { id: "escova-progressiva", name: "Escova Progressiva", price: 250, duration: 120 },
+  { id: "coloracao", name: "Coloração", price: 180, duration: 90 },
+  { id: "hidratacao", name: "Hidratação Profunda", price: 90, duration: 45 },
+  { id: "manicure", name: "Manicure & Pedicure", price: 80, duration: 60 },
+  { id: "sobrancelha", name: "Design de Sobrancelha", price: 45, duration: 20 },
 ];
 
 export const BARBERS: Barber[] = [
-  { id: "marcus", name: "Marcus", image: barber1, available: true, specialty: "Fades" },
-  { id: "carlos", name: "Carlos", image: barber2, available: true, specialty: "Textures" },
-  { id: "erik", name: "Erik", image: barber3, available: false, specialty: "Beards" },
-  { id: "jay", name: "Jay", image: barber4, available: true, specialty: "Classic" },
+  { id: "camila", name: "Camila", image: stylist1, available: true, specialty: "Cortes" },
+  { id: "aline", name: "Aline", image: stylist2, available: true, specialty: "Coloração" },
+  { id: "renata", name: "Renata", image: stylist3, available: false, specialty: "Tratamentos" },
+  { id: "julia", name: "Júlia", image: stylist4, available: true, specialty: "Penteados" },
 ];
 
 export const TIME_SLOTS = [
