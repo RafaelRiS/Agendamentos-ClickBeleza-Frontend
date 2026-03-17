@@ -12,7 +12,7 @@ const ProgressHeader = ({ step, totalSteps, labels }: ProgressHeaderProps) => {
   return (
     <div className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="px-6 py-4 flex items-center justify-between">
-        <h1 className="text-lg font-medium tracking-tighter">PRECISION</h1>
+        <h1 className="font-display text-xl italic tracking-tight text-foreground">Atelier</h1>
         <span className="font-mono-data text-xs text-muted-foreground">
           {labels[step]}
         </span>

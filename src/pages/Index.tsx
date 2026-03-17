@@ -14,7 +14,7 @@ import {
 } from "@/data/booking-data";
 import { toast } from "sonner";
 
-const STEPS = ["Service", "Barber", "Time", "Confirm"];
+const STEPS = ["Serviço", "Profissional", "Horário", "Confirmar"];
 
 const pageVariants = {
   enter: { opacity: 0, x: 40 },
@@ -45,8 +45,8 @@ const Index = () => {
   };
 
   const handleConfirm = () => {
-    toast.success("Booking confirmed.", {
-      description: `${selectedService?.name} with ${selectedBarber?.name} at ${selectedSlot}`,
+    toast.success("Agendamento confirmado!", {
+      description: `${selectedService?.name} com ${selectedBarber?.name} às ${selectedSlot}`,
     });
   };
 
@@ -58,21 +58,21 @@ const Index = () => {
     <div className="min-h-screen bg-background max-w-lg mx-auto relative">
       <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
 
-      {/* Live status bar */}
+      {/* Barra de status */}
       <div className="border-b border-border px-6 py-3 flex items-center gap-3">
         <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
         <p className="font-mono-data text-[11px] text-muted-foreground">
-          Currently serving: Client #47. Next chair opens in <span className="text-foreground">14 min</span>.
+          Atendendo agora: Cliente #47. Próximo horário livre em <span className="text-foreground">14 min</span>.
         </p>
       </div>
 
-      {/* Back button */}
+      {/* Botão voltar */}
       {step > 0 && (
         <button
           onClick={handleBack}
           className="px-6 pt-4 text-xs text-muted-foreground tracking-widest uppercase surface-hover inline-block"
         >
-          ← Back
+          ← Voltar
         </button>
       )}
 
@@ -87,11 +87,11 @@ const Index = () => {
             transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
           >
             <div className="px-6 pt-8 pb-4">
-              <h2 className="text-4xl font-medium tracking-tighter text-foreground leading-none">
-                THE CHAIR<br />IS OPEN.
+              <h2 className="font-display text-5xl font-medium italic text-foreground leading-[1.1]">
+                Seu horário<br />está esperando.
               </h2>
-              <p className="text-xs text-muted-foreground tracking-widest uppercase mt-4">
-                Select your service.
+              <p className="text-xs text-muted-foreground tracking-widest uppercase mt-6">
+                Escolha seu serviço.
               </p>
             </div>
             <div>
