@@ -1,16 +1,169 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import ProgressHeader from "@/components/ProgressHeader";
+import ServiceCard from "@/components/ServiceCard";
+import BarberSelector from "@/components/BarberSelector";
+import TimeSelection from "@/components/TimeSelection";
+import ConfirmationSlider from "@/components/ConfirmationSlider";
+import {
+  SERVICES,
+  BARBERS,
+  TIME_SLOTS,
+  type Service,
+  type Barber,
+} from "@/data/booking-data";
+import { toast } from "sonner";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const STEPS = ["Service", "Barber", "Time", "Confirm"];
+
+const pageVariants = {
+  enter: { opacity: 0, x: 40 },
+  center: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -40 },
+};
+
+const Index = () => {
+  const [step, setStep] = useState(0);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedBarber, setSelectedBarber] = useState<Barber | null>(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+
+  const handleServiceSelect = (service: Service) => {
+    setSelectedService(service);
+    setTimeout(() => setStep(1), 150);
+  };
+
+  const handleBarberSelect = (barber: Barber) => {
+    setSelectedBarber(barber);
+    setTimeout(() => setStep(2), 150);
+  };
+
+  const handleSlotSelect = (slot: string) => {
+    setSelectedSlot(slot);
+    setTimeout(() => setStep(3), 150);
+  };
+
+  const handleConfirm = () => {
+    toast.success("Booking confirmed.", {
+      description: `${selectedService?.name} with ${selectedBarber?.name} at ${selectedSlot}`,
+    });
+  };
+
+  const handleBack = () => {
+    if (step > 0) setStep(step - 1);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background max-w-lg mx-auto relative">
+      <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
+
+      {/* Live status bar */}
+      <div className="border-b border-border px-6 py-3 flex items-center gap-3">
+        <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+        <p className="font-mono-data text-[11px] text-muted-foreground">
+          Currently serving: Client #47. Next chair opens in <span className="text-foreground">14 min</span>.
+        </p>
+      </div>
+
+      {/* Back button */}
+      {step > 0 && (
+        <button
+          onClick={handleBack}
+          className="px-6 pt-4 text-xs text-muted-foreground tracking-widest uppercase surface-hover inline-block"
+        >
+          ← Back
+        </button>
+      )}
+
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div
+            key="services"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+            <div className="px-6 pt-8 pb-4">
+              <h2 className="text-4xl font-medium tracking-tighter text-foreground leading-none">
+                THE CHAIR<br />IS OPEN.
+              </h2>
+              <p className="text-xs text-muted-foreground tracking-widest uppercase mt-4">
+                Select your service.
+              </p>
+            </div>
+            <div>
+              {SERVICES.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  selected={selectedService?.id === service.id}
+                  onSelect={handleServiceSelect}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {step === 1 && (
+          <motion.div
+            key="barbers"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+            <BarberSelector
+              barbers={BARBERS}
+              selectedId={selectedBarber?.id ?? null}
+              onSelect={handleBarberSelect}
+            />
+          </motion.div>
+        )}
+
+        {step === 2 && (
+          <motion.div
+            key="time"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+            <TimeSelection
+              slots={TIME_SLOTS}
+              selectedSlot={selectedSlot}
+              selectedDate={selectedDate}
+              onSelectSlot={handleSlotSelect}
+              onSelectDate={setSelectedDate}
+            />
+          </motion.div>
+        )}
+
+        {step === 3 && selectedService && selectedBarber && selectedSlot && (
+          <motion.div
+            key="confirm"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+            <ConfirmationSlider
+              service={selectedService}
+              barber={selectedBarber}
+              date={selectedDate}
+              time={selectedSlot}
+              onConfirm={handleConfirm}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
