@@ -3,6 +3,7 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import type { Service, Barber } from "@/data/booking-data";
+import {toast} from "sonner";
 
 interface ConfirmationSliderProps {
   service: Service;
@@ -28,15 +29,25 @@ const ConfirmationSlider = ({
 
   const bgOpacity = useTransform(x, [0, maxDrag], [0, 1]);
 
-  const handleDragEnd = () => {
-    if (x.get() > maxDrag * 0.85) {
-      animate(x, maxDrag, { duration: 0.15 });
-      setConfirmed(true);
-      onConfirm();
-    } else {
-      animate(x, 0, { duration: 0.3, ease: [0.2, 0, 0, 1] });
-    }
-  };
+    const [name, setName] = useState("");
+
+    const [phone, setPhone] = useState("");
+
+    const handleDragEnd = () => {
+        if (!name || !phone) {
+            alert("Preencha nome e telefone");
+            animate(x, 0);
+            return;
+        }
+
+        if (x.get() > maxDrag * 0.85) {
+            animate(x, maxDrag, { duration: 0.15 });
+            setConfirmed(true);
+            onConfirm();
+        } else {
+            animate(x, 0, { duration: 0.3, ease: [0.2, 0, 0, 1] });
+        }
+    };
 
   return (
     <div className="px-6 py-8">
@@ -70,6 +81,35 @@ const ConfirmationSlider = ({
           </div>
         </div>
       </div>
+
+        {/* Formulário */}
+        <div className="px-6 py-8 space-y-4">
+            <div>
+                <label className="text-xs text-muted-foreground uppercase">
+                    Nome
+                </label>
+                <input
+                    type="text"
+                    placeholder="Rafael Ribeiro"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full h-12 border px-3 mt-1"
+                />
+            </div>
+
+            <div>
+                <label className="text-xs text-muted-foreground uppercase">
+                    Telefone
+                </label>
+                <input
+                    type="text"
+                    placeholder="(11) 9 9999-9999"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full h-12 border px-3 mt-1"
+                />
+            </div>
+        </div>
 
       {/* Deslizar para confirmar */}
       <div
