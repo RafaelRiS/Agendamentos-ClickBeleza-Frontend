@@ -189,14 +189,16 @@ const Index = () => {
             exit="exit"
             transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
           >
-            <TimeSelection
-              slots={TIME_SLOTS}
-              selectedSlot={selectedSlot}
-              selectedDate={selectedDate}
-              onSelectSlot={handleSlotSelect}
-              onSelectDate={setSelectedDate}
-              appointments={appointments}
-            />
+              <TimeSelection
+                  slots={TIME_SLOTS}
+                  selectedSlot={selectedSlot}
+                  selectedDate={selectedDate}
+                  onSelectSlot={handleSlotSelect}
+                  onSelectDate={setSelectedDate}
+                  appointments={appointments}
+                  selectedDuration={selectedService?.duration || 0}
+                  selectedBarber={selectedBarber}
+              />
           </motion.div>
         )}
 
