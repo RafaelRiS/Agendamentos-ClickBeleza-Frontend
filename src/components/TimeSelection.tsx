@@ -99,7 +99,7 @@ const TimeSelection = ({
                       const existingStart = toMinutes(a.time);
                       const existingEnd = existingStart + (a.duration || 60);
 
-                      return newStart < existingEnd && newEnd > existingStart;
+                      return newStart >= existingStart && newStart < existingEnd;
                   });
 
                   const unavailable =
