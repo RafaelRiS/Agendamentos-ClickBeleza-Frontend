@@ -5,6 +5,7 @@ import ServiceCard from "@/components/ServiceCard";
 import BarberSelector from "@/components/BarberSelector";
 import TimeSelection from "@/components/TimeSelection";
 import ConfirmationSlider from "@/components/ConfirmationSlider";
+import { useEffect } from "react";
 import {
   SERVICES,
   BARBERS,
@@ -26,8 +27,11 @@ const Index = () => {
   const [step, setStep] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedBarber, setSelectedBarber] = useState<Barber | null>(null);
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [appointments, setAppointments] = useState([]);
 
   const handleServiceSelect = (service: Service) => {
     setSelectedService(service);
@@ -44,15 +48,75 @@ const Index = () => {
     setTimeout(() => setStep(3), 150);
   };
 
-  const handleConfirm = () => {
-    toast.success("Agendamento confirmado!", {
-      description: `${selectedService?.name} com ${selectedBarber?.name} às ${selectedSlot}`,
-    });
-  };
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/appointments")
+            .then(res => res.json())
+            .then(data => setAppointments(data))
+            .catch(() => console.error("Erro ao buscar agendamentos"));
+    }, []);
+
+    const handleConfirm = async () => {
+        try {
+            const cleanPhone = customerPhone.replace(/\D/g, "");
+
+            const response = await fetch("http://127.0.0.1:8000/appointments", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: customerName,
+                    phone: cleanPhone,
+                    service: selectedService?.name,
+                    barber: selectedBarber?.name,
+                    date: selectedDate.toLocaleDateString("sv-SE"), // formato: YYYY-MM-DD
+                    time: selectedSlot,
+                    duration: selectedService?.duration,
+                }),
+            });
+
+            console.log("ENVIANDO:", customerName, customerPhone);
+
+            const data = await response.json();
+
+            if (data.error) {
+                toast.error(data.error);
+                return;
+            }
+
+            toast.success("Agendamento confirmado!", {
+                description: `${customerName} às ${selectedSlot}`,
+            });
+
+            toast.success("Agendamento confirmado!", {
+                description: `${customerName} às ${selectedSlot}`,
+            });
+
+// 🔥 atualiza lista
+            fetch("http://127.0.0.1:8000/appointments")
+                .then(res => res.json())
+                .then(data => setAppointments(data));
+
+        } catch (error) {
+            toast.error("Erro ao agendar");
+        }
+    };
 
   const handleBack = () => {
     if (step > 0) setStep(step - 1);
   };
+
+    interface ConfirmationSliderProps {
+        service: Service;
+        barber: Barber;
+        date: Date;
+        time: string;
+        name: string;
+        setName: (value: string) => void;
+        phone: string;
+        setPhone: (value: string) => void;
+        onConfirm: () => void;
+    }
 
   return (
     <div className="min-h-screen bg-background max-w-lg mx-auto relative">
@@ -131,6 +195,7 @@ const Index = () => {
               selectedDate={selectedDate}
               onSelectSlot={handleSlotSelect}
               onSelectDate={setSelectedDate}
+              appointments={appointments}
             />
           </motion.div>
         )}
@@ -144,13 +209,17 @@ const Index = () => {
             exit="exit"
             transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
           >
-            <ConfirmationSlider
-              service={selectedService}
-              barber={selectedBarber}
-              date={selectedDate}
-              time={selectedSlot}
-              onConfirm={handleConfirm}
-            />
+              <ConfirmationSlider
+                  service={selectedService!}
+                  barber={selectedBarber!}
+                  date={selectedDate}
+                  time={selectedSlot!}
+                  name={customerName}
+                  setName={setCustomerName}
+                  phone={customerPhone}
+                  setPhone={setCustomerPhone}
+                  onConfirm={handleConfirm}
+              />
           </motion.div>
         )}
       </AnimatePresence>

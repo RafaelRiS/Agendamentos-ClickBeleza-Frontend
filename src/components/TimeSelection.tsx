@@ -4,11 +4,14 @@ import { ptBR } from "date-fns/locale";
 import { UNAVAILABLE_SLOTS } from "@/data/booking-data";
 
 interface TimeSelectionProps {
-  slots: string[];
-  selectedSlot: string | null;
-  onSelectSlot: (slot: string) => void;
-  selectedDate: Date;
-  onSelectDate: (date: Date) => void;
+    slots: string[];
+    selectedSlot: string | null;
+    onSelectSlot: (slot: string) => void;
+    selectedDate: Date;
+    onSelectDate: (date: Date) => void;
+    appointments: any[];
+    selectedDuration: number;
+    selectedBarber: any;
 }
 
 const TimeSelection = ({
@@ -17,6 +20,9 @@ const TimeSelection = ({
   onSelectSlot,
   selectedDate,
   onSelectDate,
+    appointments,
+    selectedDuration,
+    selectedBarber,
 }: TimeSelectionProps) => {
   const today = new Date();
   const days = Array.from({ length: 7 }, (_, i) => addDays(today, i));
@@ -70,11 +76,36 @@ const TimeSelection = ({
                   const slotTime = new Date(selectedDate);
                   slotTime.setHours(hour, minute, 0, 0);
 
-                  const isPast =
-                      format(selectedDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd") &&
-                      slotTime < now;
+                  const isToday =
+                      selectedDate.toDateString() === now.toDateString();
 
-                  const unavailable = UNAVAILABLE_SLOTS.includes(slot) || isPast;
+                  const isPast =
+                      isToday && slotTime.getTime() < now.getTime();
+
+                  const dateFormatted = selectedDate.toLocaleDateString("sv-SE");
+
+                  const toMinutes = (time: string) => {
+                      const [h, m] = time.split(":").map(Number);
+                      return h * 60 + m;
+                  };
+
+                  const isBooked = appointments.some((a) => {
+                      if (a.date !== dateFormatted) return false;
+                      if (a.barber !== selectedBarber?.name) return false;
+
+                      const newStart = toMinutes(slot);
+                      const newEnd = newStart + selectedDuration;
+
+                      const existingStart = toMinutes(a.time);
+                      const existingEnd = existingStart + (a.duration || 60);
+
+                      return newStart < existingEnd && newEnd > existingStart;
+                  });
+
+                  const unavailable =
+                      UNAVAILABLE_SLOTS.includes(slot) ||
+                      isPast ||
+                      isBooked;
 
                   const isSelected = selectedSlot === slot;
             return (

@@ -6,20 +6,28 @@ import type { Service, Barber } from "@/data/booking-data";
 import {toast} from "sonner";
 
 interface ConfirmationSliderProps {
-  service: Service;
-  barber: Barber;
-  date: Date;
-  time: string;
-  onConfirm: () => void;
+    service: Service;
+    barber: Barber;
+    date: Date;
+    time: string;
+    name: string;
+    setName: (value: string) => void;
+    phone: string;
+    setPhone: (value: string) => void;
+    onConfirm: () => void;
 }
 
 const ConfirmationSlider = ({
-  service,
-  barber,
-  date,
-  time,
-  onConfirm,
-}: ConfirmationSliderProps) => {
+                                service,
+                                barber,
+                                date,
+                                time,
+                                name,
+                                setName,
+                                phone,
+                                setPhone,
+                                onConfirm,
+                            }: ConfirmationSliderProps) => {
   const [confirmed, setConfirmed] = useState(false);
   const constraintsRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -29,13 +37,45 @@ const ConfirmationSlider = ({
 
   const bgOpacity = useTransform(x, [0, maxDrag], [0, 1]);
 
-    const [name, setName] = useState("");
+    const isValidPhone = (phone: string) => {
+        const clean = phone.replace(/\D/g, "");
 
-    const [phone, setPhone] = useState("");
+        if (clean.length !== 11) return false;
+
+        if (!clean.startsWith("9", 2)) return false;
+
+        if (/^(\d)\1+$/.test(clean)) return false;
+
+        return true;
+    };
+
+    const formatPhone = (value: string) => {
+        const numbers = value.replace(/\D/g, "");
+
+        if (numbers.length === 0) return "";
+
+        if (numbers.length <= 2) {
+            return `(${numbers}`;
+        }
+        if (numbers.length <= 7) {
+            return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+        }
+        if (numbers.length <= 11) {
+            return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7)}`;
+        }
+
+        return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+    };
 
     const handleDragEnd = () => {
         if (!name || !phone) {
             alert("Preencha nome e telefone");
+            animate(x, 0);
+            return;
+        }
+
+        if (!isValidPhone(phone)) {
+            toast.error("Telefone inválido");
             animate(x, 0);
             return;
         }
@@ -93,7 +133,7 @@ const ConfirmationSlider = ({
                     placeholder="Rafael Ribeiro"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full h-12 border px-3 mt-1"
+                    className="w-full h-12 border px-3 mt-1 text-black"
                 />
             </div>
 
@@ -105,8 +145,8 @@ const ConfirmationSlider = ({
                     type="text"
                     placeholder="(11) 9 9999-9999"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full h-12 border px-3 mt-1"
+                    onChange={(e) => setPhone(formatPhone(e.target.value))}
+                    className="w-full h-12 border px-3 mt-1 text-black"
                 />
             </div>
         </div>
