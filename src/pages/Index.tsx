@@ -66,8 +66,8 @@ const Index = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name: customerName,
-                    phone: cleanPhone,
+                    client_name: customerName,
+                    client_phone: cleanPhone,
                     service: selectedService?.name,
                     barber: selectedBarber?.name,
                     date: selectedDate.toLocaleDateString("sv-SE"), // formato: YYYY-MM-DD
@@ -119,9 +119,9 @@ const Index = () => {
         barber: Barber;
         date: Date;
         time: string;
-        name: string;
+        client_name: string;
         setName: (value: string) => void;
-        phone: string;
+        client_phone: string;
         setPhone: (value: string) => void;
         onConfirm: () => void;
     }
