@@ -5,6 +5,7 @@ import ServiceCard from "@/components/ServiceCard";
 import BarberSelector from "@/components/BarberSelector";
 import TimeSelection from "@/components/TimeSelection";
 import ConfirmationSlider from "@/components/ConfirmationSlider";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import {
   SERVICES,
@@ -87,10 +88,15 @@ const Index = () => {
             toast.success("Agendamento confirmado!", {
                 description: `${customerName} às ${selectedSlot}`,
             });
-
-            toast.success("Agendamento confirmado!", {
-                description: `${customerName} às ${selectedSlot}`,
-            });
+            setTimeout(() => {
+                setStep(0);
+                setSelectedService(null);
+                setSelectedBarber(null);
+                setSelectedSlot(null);
+                setCustomerName("");
+                setCustomerPhone("");
+                setSelectedDate(new Date());
+            }, 1000);
 
 // 🔥 atualiza lista
             fetch("http://127.0.0.1:8000/appointments")
@@ -101,6 +107,8 @@ const Index = () => {
             toast.error("Erro ao agendar");
         }
     };
+
+    const navigate = useNavigate();
 
   const handleBack = () => {
     if (step > 0) setStep(step - 1);
@@ -119,18 +127,28 @@ const Index = () => {
     }
 
   return (
-    <div className="min-h-screen bg-background max-w-lg mx-auto relative">
-      <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
+      <div className="min-h-screen bg-background max-w-lg mx-auto relative">
+          <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
 
-      {/* Botão voltar */}
-      {step > 0 && (
-        <button
-          onClick={handleBack}
-          className="px-6 pt-4 text-xs text-muted-foreground tracking-widest uppercase surface-hover inline-block"
-        >
-          ← Voltar
-        </button>
-      )}
+          {/* 🔥 BOTÃO "MEUS AGENDAMENTOS" (sempre visível) */}
+          <div className="flex justify-end p-4">
+              <button
+                  onClick={() => navigate("/meus-agendamentos")}
+                  className="text-xs border border-black-400 px-4 py-2 rounded-full bg-black text-white hover:border-pink-500 transition"
+              >
+                  Meus Agendamentos
+              </button>
+          </div>
+
+          {/* Botão voltar */}
+          {step > 0 && (
+              <button
+                  onClick={handleBack}
+                  className="px-6 pt-4 text-xs text-muted-foreground tracking-widest uppercase surface-hover inline-block"
+              >
+                  ← Voltar
+              </button>
+          )}
 
       <AnimatePresence mode="wait">
         {step === 0 && (
