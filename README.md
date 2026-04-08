@@ -35,4 +35,4 @@ Instale as dependências com o comando no terminal: 'npm install'
 Agora inicie com o comando no terminal: 'npm run dev'
 ```
 
-# ⚠️ ATENÇÂO: Certifique-se de que o backend (https://github.com/RafaelRiS/Agendamentos-ClickBeleza-Backend.git) está rodando!
+## ⚠️ ATENÇÂO: Certifique-se de que o backend (https://github.com/RafaelRiS/Agendamentos-ClickBeleza-Backend.git) está rodando!
