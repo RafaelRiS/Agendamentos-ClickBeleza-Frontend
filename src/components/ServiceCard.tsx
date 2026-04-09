@@ -16,18 +16,30 @@ const ServiceCard = ({ service, selected, onSelect }: ServiceCardProps) => {
         selected ? "border-accent-active bg-secondary" : ""
       }`}
     >
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-base font-medium tracking-tight text-foreground">
-            {service.name}
-          </p>
-          <p className="font-mono-data text-xs text-muted-foreground mt-1">
-            {service.duration}min
-          </p>
-        </div>
-        <span className="font-mono-data text-sm text-primary">
-          R${service.price}
-        </span>
+        <div className="flex items-center gap-4 p-4 rounded-xl border border-border bg-background hover:shadow-md transition-all">
+
+            {/* Imagem */}
+            <img
+                src={service.image}
+                alt={service.name}
+                className="w-20 h-20 object-cover rounded-xl"
+            />
+
+            {/* Info */}
+            <div className="flex-1">
+                <p className="text-base font-semibold text-foreground">
+                    {service.name}
+                </p>
+
+                <p className="text-xs text-muted-foreground mt-1">
+                    ⏱ {service.duration} min
+                </p>
+            </div>
+
+            {/* Preço */}
+            <span className="font-mono-data text-sm font-semibold text-white-400">
+    R$ {service.price}
+  </span>
       </div>
     </motion.button>
   );

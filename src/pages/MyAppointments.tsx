@@ -62,7 +62,7 @@ const MyAppointments = () => {
                 {appointments.map((a: any, i) => (
                     <div key={i} className="border p-3 mb-2">
                         <p><b>Serviço:</b> {a.service}</p>
-                        <p><b>Barbeiro:</b> {a.barber}</p>
+                        <p><b>Profissional:</b> {a.barber}</p>
                         <p><b>Data:</b> {a.date}</p>
                         <p><b>Hora:</b> {a.time}</p>
                         <p><b>Duração Prevista do Atendimento:</b> {a.duration} <>Minutos</></p>
