@@ -134,7 +134,7 @@ const Index = () => {
           <div className="flex justify-end p-4">
               <button
                   onClick={() => navigate("/meus-agendamentos")}
-                  className="text-xs border border-black-400 px-4 py-2 rounded-full bg-black text-white hover:border-pink-500 transition"
+                  className="text-xs border border-black px-4 py-2 rounded-full bg-black text-white hover:border-pink-500 transition"
               >
                   Meus Agendamentos
               </button>
