@@ -43,7 +43,7 @@ const ServiceCard = ({ service, selected, onSelect }: ServiceCardProps) => {
             </div>
 
             {/* Preço */}
-            <span className="font-mono-data text-sm font-semibold text-white-400">
+            <span className="font-mono-data text-sm font-semibold text-gray-800">
     R$ {service.price}
   </span>
       </div>
