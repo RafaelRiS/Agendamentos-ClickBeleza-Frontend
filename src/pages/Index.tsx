@@ -50,7 +50,7 @@ const Index = () => {
   };
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/appointments")
+        fetch("https://agendamentos-clickbeleza-backend.onrender.com/appointments")
             .then(res => res.json())
             .then(data => setAppointments(data))
             .catch(() => console.error("Erro ao buscar agendamentos"));
@@ -60,7 +60,7 @@ const Index = () => {
         try {
             const cleanPhone = customerPhone.replace(/\D/g, "");
 
-            const response = await fetch("http://127.0.0.1:8000/appointments", {
+            const response = await fetch("https://agendamentos-clickbeleza-backend.onrender.com/appointments", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const Index = () => {
             }, 1000);
 
 // 🔥 atualiza lista
-            fetch("http://127.0.0.1:8000/appointments")
+            fetch("https://agendamentos-clickbeleza-backend.onrender.com/appointments")
                 .then(res => res.json())
                 .then(data => setAppointments(data));
 

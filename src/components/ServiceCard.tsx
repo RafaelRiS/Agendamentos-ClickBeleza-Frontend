@@ -19,11 +19,17 @@ const ServiceCard = ({ service, selected, onSelect }: ServiceCardProps) => {
         <div className="flex items-center gap-4 p-4 rounded-xl border border-border bg-background hover:shadow-md transition-all">
 
             {/* Imagem */}
-            <img
-                src={service.image}
-                alt={service.name}
-                className="w-20 h-20 object-cover rounded-xl"
-            />
+            {service.image ? (
+                <img
+                    src={service.image}
+                    alt={service.name}
+                    className="w-20 h-20 object-cover rounded-xl"
+                />
+            ) : (
+                <div className="w-20 h-20 rounded-xl bg-gray-200 flex items-center justify-center text-xs text-gray-500">
+                    Sem imagem
+                </div>
+            )}
 
             {/* Info */}
             <div className="flex-1">
