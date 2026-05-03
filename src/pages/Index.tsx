@@ -132,7 +132,125 @@ const Index = () => {
         setPhone: (value: string) => void;
         onConfirm: () => void;
     }
-    return <h1>FUNCIONANDO</h1>;
+  return (
+      <div className="min-h-screen bg-background max-w-lg mx-auto relative">
+          <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
+
+          {/* 🔥 BOTÃO "MEUS AGENDAMENTOS" (sempre visível) */}
+          <div className="flex justify-end p-4">
+              <button
+                  onClick={() => navigate("/meus-agendamentos")}
+                  className="text-xs border border-black px-4 py-2 rounded-full bg-black text-white hover:border-pink-500 transition"
+              >
+                  Meus Agendamentos
+              </button>
+          </div>
+
+          {/* Botão voltar */}
+          {step > 0 && (
+              <button
+                  onClick={handleBack}
+                  className="px-6 pt-4 text-xs text-muted-foreground tracking-widest uppercase surface-hover inline-block"
+              >
+                  ← Voltar
+              </button>
+          )}
+
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div
+            key="services"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+            <div className="px-6 pt-8 pb-4">
+              <h2 className="font-display text-5xl font-medium italic text-foreground leading-[1.1]">
+                Seu horário<br />está esperando.
+              </h2>
+              <p className="text-xs text-muted-foreground tracking-widest uppercase mt-6">
+                Escolha seu serviço.
+              </p>
+            </div>
+            <div>
+              {SERVICES.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  selected={selectedService?.id === service.id}
+                  onSelect={handleServiceSelect}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {step === 1 && (
+          <motion.div
+            key="barbers"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+            <BarberSelector
+              barbers={BARBERS}
+              selectedId={selectedBarber?.id ?? null}
+              onSelect={handleBarberSelect}
+            />
+          </motion.div>
+        )}
+
+        {step === 2 && (
+          <motion.div
+            key="time"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+              <TimeSelection
+                  slots={TIME_SLOTS}
+                  selectedSlot={selectedSlot}
+                  selectedDate={selectedDate}
+                  onSelectSlot={handleSlotSelect}
+                  onSelectDate={setSelectedDate}
+                  appointments={appointments}
+                  selectedDuration={selectedService?.duration || 0}
+                  selectedBarber={selectedBarber}
+              />
+          </motion.div>
+        )}
+
+        {step === 3 && selectedService && selectedBarber && selectedSlot && (
+          <motion.div
+            key="confirm"
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          >
+              <ConfirmationSlider
+                  service={selectedService!}
+                  barber={selectedBarber!}
+                  date={selectedDate}
+                  time={selectedSlot!}
+                  name={customerName}
+                  setName={setCustomerName}
+                  phone={customerPhone}
+                  setPhone={setCustomerPhone}
+                  onConfirm={handleConfirm}
+              />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 };
 
 export default Index;
