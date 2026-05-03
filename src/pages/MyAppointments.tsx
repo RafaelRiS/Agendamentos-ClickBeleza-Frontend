@@ -8,7 +8,7 @@ const MyAppointments = () => {
     const handleSearch = async () => {
         const cleanPhone = phone.replace(/\D/g, "");
 
-        const res = await fetch(`https://agendamentos-clickbeleza-backend.onrender.com/appointments?phone=${cleanPhone}`);
+        const res = await fetch(`http://127.0.0.1:8000/appointments?phone=${cleanPhone}`);
         const data = await res.json();
 
         setAppointments(data);

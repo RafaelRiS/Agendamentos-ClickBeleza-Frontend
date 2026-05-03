@@ -4,7 +4,7 @@ const Admin = () => {
     const [appointments, setAppointments] = useState([]);
 
     const fetchAppointments = async () => {
-        const res = await fetch("agendamentos-click-beleza-frontend.vercel.app/appointments");
+        const res = await fetch("http://127.0.0.1:8000/appointments");
         const data = await res.json();
         setAppointments(data);
     };
@@ -14,7 +14,7 @@ const Admin = () => {
     }, []);
 
     const handleDelete = async (id: number) => {
-        await fetch(`agendamentos-click-beleza-frontend.vercel.app/appointments/${id}`, {
+        await fetch(`http://127.0.0.1:8000/appointments/${id}`, {
             method: "DELETE",
         });
 
@@ -24,7 +24,7 @@ const Admin = () => {
     const handleUpdate = async (id: number) => {
         const newService = prompt("Novo serviço:");
 
-        await fetch(`agendamentos-click-beleza-frontend.vercel.app/appointments/${id}`, {
+        await fetch(`http://127.0.0.1:8000/appointments/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
