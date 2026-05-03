@@ -11,11 +11,11 @@ import Manutenção from "@/assets/services/Manutenção.jpg";
 import Manutenção_2 from "@/assets/services/Manutenção_2.jpg";
 
 export interface Service {
-  id: string;
-  name: string;
-  price: number;
-  duration: number;
-  image?: string;
+    id: string;
+    name: string;
+    price: number;
+    duration: number;
+    image?: string;
 }
 
 export interface Barber {
