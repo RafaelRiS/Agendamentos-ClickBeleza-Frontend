@@ -78,7 +78,14 @@ const Index = () => {
 
             console.log("ENVIANDO:", customerName, customerPhone);
 
-            const data = await response.json();
+            let data;
+
+            try {
+                data = await response.json();
+            } catch {
+                toast.error("Erro na resposta do servidor");
+                return;
+            }
 
             if (data.error) {
                 toast.error(data.error);
