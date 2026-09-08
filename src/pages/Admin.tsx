@@ -4,7 +4,7 @@ const Admin = () => {
     const [appointments, setAppointments] = useState([]);
 
     const fetchAppointments = async () => {
-        const res = await fetch("http://127.0.0.1:8000/appointments");
+        const res = await fetch("https://agendamentos-clickbeleza-backend.onrender.com/appointments");
         const data = await res.json();
         setAppointments(data);
     };
@@ -14,7 +14,7 @@ const Admin = () => {
     }, []);
 
     const handleDelete = async (id: string) => {
-        await fetch(`http://127.0.0.1:8000/appointments/${id}`, {
+        await fetch(`https://agendamentos-clickbeleza-backend.onrender.com/appointments/${id}`, {
             method: "DELETE",
         });
 
@@ -24,7 +24,7 @@ const Admin = () => {
     const handleUpdate = async (id: string) => {
         const newService = prompt("Novo serviço:");
 
-        await fetch(`http://127.0.0.1:8000/appointments/${id}`, {
+        await fetch(`https://agendamentos-clickbeleza-backend.onrender.com/appointments/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
