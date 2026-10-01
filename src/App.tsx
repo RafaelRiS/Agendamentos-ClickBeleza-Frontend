@@ -8,7 +8,6 @@ import MyAppointments from "./pages/MyAppointments";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import AnalyticsTracker from "./analytics/AnalyticsTracker"
-import Analytics from "./pages/Analytics.tsx";
 import AnalyticsDashboard from "@/analytics/AnalyticsDashboard.tsx";
 
 
