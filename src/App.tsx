@@ -7,6 +7,11 @@ import Index from "./pages/Index.tsx";
 import MyAppointments from "./pages/MyAppointments";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AnalyticsTracker from "./analytics/AnalyticsTracker"
+import Analytics from "./pages/Analytics.tsx";
+import AnalyticsDashboard from "@/analytics/AnalyticsDashboard.tsx";
+
+
 
 const queryClient = new QueryClient();
 
@@ -16,10 +21,12 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+          <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />
             <Route path="/meus-agendamentos" element={<MyAppointments />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/analytics" element={<AnalyticsDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

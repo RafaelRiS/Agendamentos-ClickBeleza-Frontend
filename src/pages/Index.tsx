@@ -115,11 +115,42 @@ const Index = () => {
         }
     };
 
+    const getAnalyticsScreen = (step: number) => {
+        switch (step) {
+            case 0:
+                return "service";
+
+            case 1:
+                return "barber";
+
+            case 2:
+                return "time";
+
+            case 3:
+                return "confirmation";
+
+            default:
+                return "unknown";
+        }
+    };
+
+
     const navigate = useNavigate();
 
   const handleBack = () => {
     if (step > 0) setStep(step - 1);
   };
+
+    useEffect(() => {
+        window.dispatchEvent(
+            new CustomEvent("analytics-screen-change", {
+                detail: {
+                    screen: getAnalyticsScreen(step),
+                },
+            })
+        );
+    }, [step]);
+
 
     interface ConfirmationSliderProps {
         service: Service;
