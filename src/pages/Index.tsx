@@ -15,6 +15,7 @@ import {
   type Barber,
 } from "@/data/booking-data";
 import { toast } from "sonner";
+import AppointmentFeedback from "@/components/AppointmentFeedback";
 
 const STEPS = ["Serviço", "Profissional", "Horário", "Confirmar"];
 
@@ -33,8 +34,12 @@ const Index = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [appointments, setAppointments] = useState([]);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [appointmentId, setAppointmentId] = useState<string | null>(null);
 
-  const handleServiceSelect = (service: Service) => {
+
+
+    const handleServiceSelect = (service: Service) => {
     setSelectedService(service);
     setTimeout(() => setStep(1), 150);
   };
@@ -92,18 +97,16 @@ const Index = () => {
                 return;
             }
 
+            setAppointmentId(data.id);
+            console.log("ID DO AGENDAMENTO:", data.id);
+
+
             toast.success("Agendamento confirmado!", {
                 description: `${customerName} às ${selectedSlot}`,
             });
-            setTimeout(() => {
-                setStep(0);
-                setSelectedService(null);
-                setSelectedBarber(null);
-                setSelectedSlot(null);
-                setCustomerName("");
-                setCustomerPhone("");
-                setSelectedDate(new Date());
-            }, 1000);
+
+            setShowFeedback(true);
+
 
 // 🔥 atualiza lista
             fetch("https://agendamentos-clickbeleza-backend.onrender.com/appointments")
@@ -163,7 +166,32 @@ const Index = () => {
         setPhone: (value: string) => void;
         onConfirm: () => void;
     }
-  return (
+
+    if (showFeedback) {
+        return (
+            <AppointmentFeedback
+                appointmentId={appointmentId || ""}
+                customerName={customerName}
+                customerPhone={customerPhone.replace(/\D/g, "")}
+                service={selectedService?.name || ""}
+                barber={selectedBarber?.name || ""}
+                date={selectedDate.toLocaleDateString("sv-SE")}
+                time={selectedSlot || ""}
+                onFinished={() => {
+                    setShowFeedback(false);
+                    setStep(0);
+                    setSelectedService(null);
+                    setSelectedBarber(null);
+                    setSelectedSlot(null);
+                    setCustomerName("");
+                    setCustomerPhone("");
+                    setSelectedDate(new Date());
+                }}
+            />
+        );
+    }
+
+    return (
       <div className="min-h-screen bg-background max-w-lg mx-auto relative">
           <ProgressHeader step={step} totalSteps={STEPS.length} labels={STEPS} />
 

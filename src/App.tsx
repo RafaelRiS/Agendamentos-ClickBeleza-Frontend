@@ -21,11 +21,12 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
           <AnalyticsTracker />
-        <Routes>
-          <Route path="/" element={<Index />} />
-            <Route path="/meus-agendamentos" element={<MyAppointments />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/analytics" element={<AnalyticsDashboard />} />
+          <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/meus-agendamentos" element={<MyAppointments />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/analytics" element={<AnalyticsDashboard />} />
+              <Route path="*" element={<NotFound />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
