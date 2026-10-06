@@ -163,8 +163,8 @@ const AppointmentFeedback = ({
                                     onClick={() => setEaseRating(value)}
                                     className={`w-11 h-11 rounded-full border transition ${
                                         value === easeRating
-                                            ? "bg-black text-white border-black"
-                                            : "bg-white hover:bg-gray-100"
+                                            ? "bg-[#A855A0] text-white border-[#A855A0]"
+                                            : "bg-white text-black hover:bg-gray-100"
                                     }`}
                                 >
                                     {value}
