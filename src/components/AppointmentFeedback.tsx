@@ -139,7 +139,7 @@ const AppointmentFeedback = ({
                                     onClick={() => setRating(star)}
                                     className={`text-4xl transition-transform hover:scale-110 ${
                                         star <= rating
-                                            ? "text-yellow-400"
+                                            ? "text-[#A855A0]"
                                             : "text-gray-300"
                                     }`}
                                 >
