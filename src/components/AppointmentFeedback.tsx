@@ -85,7 +85,7 @@ const AppointmentFeedback = ({
             }
 
 
-            toast.success("Obrigado pela sua avaliação! 💜");
+            toast.success("Obrigado pela sua avaliação! 🩷");
 
             onFinished();
         } catch (error) {

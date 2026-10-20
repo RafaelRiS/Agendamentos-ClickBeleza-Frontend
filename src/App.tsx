@@ -9,6 +9,7 @@ import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import AnalyticsTracker from "./analytics/AnalyticsTracker"
 import AnalyticsDashboard from "@/analytics/AnalyticsDashboard.tsx";
+import RetentionDashboard from "@/pages/RetentionDashboard.tsx";
 
 
 
@@ -25,6 +26,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/meus-agendamentos" element={<MyAppointments />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/retencao" element={<RetentionDashboard />}/>
               <Route path="/analytics" element={<AnalyticsDashboard />} />
               <Route path="*" element={<NotFound />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
